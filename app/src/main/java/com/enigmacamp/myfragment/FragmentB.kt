@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResultListener
 
 
 /**
@@ -17,6 +19,11 @@ import android.widget.TextView
 class FragmentB : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setFragmentResultListener("nameKey") {requestKey, bundle ->
+            val user_name = bundle!!.getString("name")
+            val textView = view?.findViewById<TextView>(R.id.hello_textView)
+            textView?.setText("Hello ${user_name}")
+        }
     }
 
     override fun onCreateView(
@@ -24,10 +31,6 @@ class FragmentB : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_b, container, false)
-        val bundle = arguments
-        val user_name = bundle!!.getString("name")
-        val textView = view.findViewById<TextView>(R.id.hello_textView)
-        textView?.setText("Hello ${user_name}")
         return view
     }
 
